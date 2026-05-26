@@ -104,8 +104,15 @@ async function loadViewCount() {
     });
 
     const data = await response.json();
-    viewCount.textContent = data.total;
+
+    if (typeof data.total === "number") {
+      viewCount.textContent = data.total;
+    } else {
+      viewCount.textContent = "0";
+      console.log("View count response missing total:", data);
+    }
   } catch (error) {
+    viewCount.textContent = "0";
     console.log("View count failed:", error);
   }
 }
