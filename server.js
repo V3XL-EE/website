@@ -99,6 +99,51 @@ app.get("/api/view", (req, res) => {
   });
 });
 
+// Current active viewers
+const activeViewers = new Map();
+
+function getActiveViewerKey(req) {
+  const forwarded = req.headers["x-forwarded-for"];
+  const ip = forwarded
+    ? forwarded.split(",")[0].trim()
+    : req.socket.remoteAddress || "unknown";
+
+  const userAgent = req.headers["user-agent"] || "unknown";
+  const rawKey = `${ip}|${userAgent}`;
+
+  return crypto.createHash("sha256").update(rawKey).digest("hex");
+}
+
+function cleanActiveViewers() {
+  const now = Date.now();
+  const timeout = 45 * 1000; // 45 seconds
+
+  for (const [key, lastSeen] of activeViewers.entries()) {
+    if (now - lastSeen > timeout) {
+      activeViewers.delete(key);
+    }
+  }
+}
+
+app.post("/api/active", (req, res) => {
+  const viewerKey = getActiveViewerKey(req);
+
+  activeViewers.set(viewerKey, Date.now());
+  cleanActiveViewers();
+
+  res.json({
+    active: activeViewers.size
+  });
+});
+
+app.get("/api/active", (req, res) => {
+  cleanActiveViewers();
+
+  res.json({
+    active: activeViewers.size
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`VEXL site running: http://localhost:${PORT}`);
 });

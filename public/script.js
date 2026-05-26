@@ -146,3 +146,23 @@ function animateTitle() {
 }
 
 animateTitle();
+
+async function updateActiveCount() {
+  const activeCount = document.getElementById("activeCount");
+
+  if (!activeCount) return;
+
+  try {
+    const response = await fetch("/api/active", {
+      method: "POST"
+    });
+
+    const data = await response.json();
+    activeCount.textContent = data.active;
+  } catch (error) {
+    console.log("Active count failed:", error);
+  }
+}
+
+updateActiveCount();
+setInterval(updateActiveCount, 15000);

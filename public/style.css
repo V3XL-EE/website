@@ -154,6 +154,50 @@ html {
   }
 }
 
+.viewer-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.active-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  padding: 9px 14px;
+  border: 1px solid rgba(255, 35, 35, 0.35);
+  border-radius: 999px;
+  background: rgba(5, 5, 5, 0.6);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 900;
+  box-shadow: 0 0 18px rgba(255, 0, 0, 0.16);
+  backdrop-filter: blur(10px);
+}
+
+.active-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #ff2020;
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.9);
+  animation: activePulse 1.6s ease-in-out infinite;
+}
+
+@keyframes activePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.65;
+  }
+
+  50% {
+    transform: scale(1.35);
+    opacity: 1;
+  }
+}
+
 .page-glow {
   position: fixed;
   inset: -40%;
