@@ -78,6 +78,31 @@ html {
   scrollbar-color: rgba(255, 0, 0, 0.55) transparent;
 }
 
+.view-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 9px 14px;
+  border: 1px solid rgba(255, 35, 35, 0.35);
+  border-radius: 999px;
+  background: rgba(5, 5, 5, 0.55);
+  color: #ff1f1f;
+  font-weight: 900;
+  box-shadow: 0 0 22px rgba(255, 0, 0, 0.16);
+  backdrop-filter: blur(10px);
+}
+
+.view-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+#viewCount {
+  color: #ff2a2a;
+  font-size: 14px;
+}
+
 .page-glow {
   position: fixed;
   inset: -40%;

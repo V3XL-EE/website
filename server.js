@@ -3,10 +3,15 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
+const fs = require("fs");
 const path = require("path");
+const crypto = require("crypto");
 const { readDB, writeDB } = require("./db");
 
 const app = express();
+
+app.set("trust proxy", true);
+
 const PORT = Number(process.env.PORT || 3000);
 
 app.use(helmet({ contentSecurityPolicy: false }));
@@ -34,6 +39,64 @@ app.put("/api/site", (req, res) => {
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+const viewsPath = path.join(__dirname, "data", "views.json");
+
+function readViews() {
+  if (!fs.existsSync(viewsPath)) {
+    const defaultData = {
+      total: 0,
+      visitors: []
+    };
+
+    fs.writeFileSync(viewsPath, JSON.stringify(defaultData, null, 2));
+    return defaultData;
+  }
+
+  return JSON.parse(fs.readFileSync(viewsPath, "utf8"));
+}
+
+function saveViews(data) {
+  fs.writeFileSync(viewsPath, JSON.stringify(data, null, 2));
+}
+
+function getVisitorKey(req) {
+  const forwarded = req.headers["x-forwarded-for"];
+  const ip = forwarded
+    ? forwarded.split(",")[0].trim()
+    : req.socket.remoteAddress || "unknown";
+
+  const userAgent = req.headers["user-agent"] || "unknown";
+  const rawKey = `${ip}|${userAgent}`;
+
+  return crypto.createHash("sha256").update(rawKey).digest("hex");
+}
+
+app.post("/api/view", (req, res) => {
+  const views = readViews();
+  const visitorKey = getVisitorKey(req);
+
+  const alreadyVisited = views.visitors.includes(visitorKey);
+
+  if (!alreadyVisited) {
+    views.visitors.push(visitorKey);
+    views.total += 1;
+    saveViews(views);
+  }
+
+  res.json({
+    total: views.total,
+    counted: !alreadyVisited
+  });
+});
+
+app.get("/api/view", (req, res) => {
+  const views = readViews();
+
+  res.json({
+    total: views.total
+  });
 });
 
 app.listen(PORT, () => {

@@ -92,3 +92,51 @@ async function loadSite() {
 }
 
 loadSite();
+
+async function loadViewCount() {
+  const viewCount = document.getElementById("viewCount");
+
+  if (!viewCount) return;
+
+  try {
+    const response = await fetch("/api/view", {
+      method: "POST"
+    });
+
+    const data = await response.json();
+    viewCount.textContent = data.total;
+  } catch (error) {
+    console.log("View count failed:", error);
+  }
+}
+
+loadViewCount();
+
+
+const titleText = "VEXL";
+let titleIndex = 0;
+let deleting = false;
+
+function animateTitle() {
+  if (!deleting) {
+    titleIndex++;
+    document.title = titleText.slice(0, titleIndex);
+
+    if (titleIndex === titleText.length) {
+      deleting = true;
+      setTimeout(animateTitle, 1300);
+      return;
+    }
+  } else {
+    titleIndex--;
+    document.title = titleText.slice(0, titleIndex);
+
+    if (titleIndex === 0) {
+      deleting = false;
+    }
+  }
+
+  setTimeout(animateTitle, deleting ? 130 : 180);
+}
+
+animateTitle();
