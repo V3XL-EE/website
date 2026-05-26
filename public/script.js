@@ -114,28 +114,34 @@ loadViewCount();
 
 
 const titleText = "VEXL";
-let titleIndex = 0;
+let titleIndex = 1;
 let deleting = false;
 
 function animateTitle() {
   if (!deleting) {
     titleIndex++;
-    document.title = titleText.slice(0, titleIndex);
 
-    if (titleIndex === titleText.length) {
+    if (titleIndex >= titleText.length) {
+      titleIndex = titleText.length;
       deleting = true;
-      setTimeout(animateTitle, 1300);
+      document.title = titleText;
+      setTimeout(animateTitle, 1400);
       return;
     }
   } else {
     titleIndex--;
-    document.title = titleText.slice(0, titleIndex);
 
-    if (titleIndex === 0) {
+    // Do not go below 1, or Chrome may show the website URL.
+    if (titleIndex <= 1) {
+      titleIndex = 1;
       deleting = false;
+      document.title = titleText.slice(0, titleIndex);
+      setTimeout(animateTitle, 500);
+      return;
     }
   }
 
+  document.title = titleText.slice(0, titleIndex);
   setTimeout(animateTitle, deleting ? 130 : 180);
 }
 
