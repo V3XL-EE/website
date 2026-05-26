@@ -3,16 +3,10 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
-const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 const { createClient } = require("@supabase/supabase-js");
 const { readDB, writeDB } = require("./db");
-
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
 
 const app = express();
 
@@ -24,6 +18,23 @@ app.use(helmet({ contentSecurityPolicy: false }));
 app.use(cors());
 app.use(express.json({ limit: "1mb" }));
 app.use(express.static(path.join(__dirname, "public")));
+
+/* ---------------- ENV CHECK ---------------- */
+
+if (!process.env.SUPABASE_URL) {
+  console.warn("Missing SUPABASE_URL in environment variables.");
+}
+
+if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+  console.warn("Missing SUPABASE_SERVICE_ROLE_KEY in environment variables.");
+}
+
+const supabase = createClient(
+  process.env.SUPABASE_URL || "",
+  process.env.SUPABASE_SERVICE_ROLE_KEY || ""
+);
+
+/* ---------------- SITE DATA API ---------------- */
 
 app.get("/api/site", (req, res) => {
   try {
@@ -43,29 +54,7 @@ app.put("/api/site", (req, res) => {
   }
 });
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
-
-const viewsPath = path.join(__dirname, "data", "views.json");
-
-function readViews() {
-  if (!fs.existsSync(viewsPath)) {
-    const defaultData = {
-      total: 0,
-      visitors: []
-    };
-
-    fs.writeFileSync(viewsPath, JSON.stringify(defaultData, null, 2));
-    return defaultData;
-  }
-
-  return JSON.parse(fs.readFileSync(viewsPath, "utf8"));
-}
-
-function saveViews(data) {
-  fs.writeFileSync(viewsPath, JSON.stringify(data, null, 2));
-}
+/* ---------------- TOTAL UNIQUE VIEWS ---------------- */
 
 function getVisitorKey(req) {
   const forwarded = req.headers["x-forwarded-for"];
@@ -148,7 +137,8 @@ app.get("/api/view", async (req, res) => {
   }
 });
 
-// Current active viewers
+/* ---------------- CURRENT ONLINE VIEWERS ---------------- */
+
 const activeViewers = new Map();
 
 function getActiveViewerKey(req) {
@@ -165,7 +155,7 @@ function getActiveViewerKey(req) {
 
 function cleanActiveViewers() {
   const now = Date.now();
-  const timeout = 45 * 1000; // 45 seconds
+  const timeout = 45 * 1000;
 
   for (const [key, lastSeen] of activeViewers.entries()) {
     if (now - lastSeen > timeout) {
@@ -192,6 +182,14 @@ app.get("/api/active", (req, res) => {
     active: activeViewers.size
   });
 });
+
+/* ---------------- WEBSITE FALLBACK LAST ---------------- */
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+/* ---------------- START SERVER ---------------- */
 
 app.listen(PORT, () => {
   console.log(`VEXL site running: http://localhost:${PORT}`);
