@@ -1,0 +1,16 @@
+{
+  "name": "vexl-redline-site",
+  "version": "2.0.0",
+  "description": "VEXL red/black creator profile website with frontend, backend and JSON database.",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "helmet": "^7.2.0"
+  }
+}

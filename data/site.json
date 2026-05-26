@@ -1,0 +1,46 @@
+{
+  "profile": {
+    "name": "VEXL",
+    "tagline": "Redline creator profile",
+    "bio": "Welcome to my profile! I'm VEXL, a passionate Counter-Strike player since 2013 and a creator focused on red and black aesthetics. I share clips, streams and projects across YouTube, TikTok, Twitch, Discord, Roblox and more. I'm currently building my online presence and community, so stay tuned for updates and content! Feel free to connect with me on socials or check out my projects.",
+    "location": "Estonia",
+    "status": "Building",
+    "avatar": "/icons/icon.png",
+    "logo": "",
+    "background": "/icons/websitebg.png"
+  },
+  "socials": [
+    { "label": "YouTube", "url": "https://youtube.com/@V3XLEST", "note": "Clips and uploads" },
+    { "label": "TikTok", "url": "https://tiktok.com/@v3xl.est", "note": "Short videos" },
+    { "label": "Twitch", "url": "https://twitch.tv/v3xl_ee", "note": "Streams" },
+    { "label": "Discord", "url": "https://discord.com/", "note": "Community" },
+    { "label": "Roblox", "url": "https://roblox.com/communities/837222504/DJ-VEX", "note": "Games and projects" },
+    { "label": "guns.lol", "url": "https://guns.lol/v3xl", "note": "Main bio link" }
+  ],
+  "stats": [
+    { "value": "2013", "label": "CS since" },
+    { "value": "VEXL", "label": "main name" },
+    { "value": "Estonia", "label": "location" }
+  ],
+  "specs": [
+    { "name": "CPU", "value": "I5-11600K" },
+    { "name": "GPU", "value": "RTX 3070" },
+    { "name": "RAM", "value": "32GB DDR4" },
+    { "name": "Mouse", "value": "Viper V3 Pro" },
+    { "name": "Keyboard", "value": "Razer Huntsman V3 Pro Mini" },
+    { "name": "Monitor", "value": "BENQ XL2411P 144hz" }
+  ],
+  "cs2": [
+    { "name": "Resolution", "value": "1920x1080 / 1080x1080" },
+    { "name": "Sensitivity", "value": "2.0 / 0.9" },
+    { "name": "DPI", "value": "600" },
+    { "name": "Crosshair", "value": "CSGO-o77VY-Q5MYA-v4dGa-FMYCM-svCJC" },
+    { "name": "Viewmodel", "value": "viewmodel_fov 68; viewmodel_offset_x 2.5; viewmodel_offset_y 2; viewmodel_offset_z -2; viewmodel_presetpos 0" },
+    { "name": "Launch Options", "value": "+fps_max 0 -nojoy -softparticlesdefaultoff +violence_hblood 0 +r_drawparticles 0 -console" }
+  ],
+  "projects": [
+    { "title": "DJ VEX", "description": "Roblox DJ group for events, music projects, community builds, and future game updates.", "url": "https://www.roblox.com/communities/837222504/DJ-VEX" },
+    { "title": "VEXL Bot", "description": "Discord bot project for utility, music, moderation, and server tools.", "url": "https://github.com/V3XL-EE" },
+    { "title": "Noche Vex Nightclub", "description": "Roblox nightclub project with red and black visuals, music systems, VIP area and creator tools.", "url": "https://www.roblox.com/games/98975610888247/Noche-Vex-Nightclub" }
+  ]
+}

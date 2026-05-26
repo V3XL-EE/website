@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VEXL</title>
+  <meta name="description" content="" />
+  <link rel="icon" href="/icons/icon.png" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <audio id="bgMusic" loop>
+  <source src="/audio/bg-music.ogg" type="audio/mpeg">
+</audio>
+
+<button id="musicToggle" class="music-toggle">
+  Music: Off
+</button>
+  <div class="noise"></div>
+  <div class="bg-layer"></div>
+  <div class="page-glow"></div>
+
+  <header class="nav">
+    <a class="nav-brand" href="#home" aria-label="VEXL home">
+      <img src="/icons/text.png" alt="VEXL" onerror="this.style.display='none'; document.querySelector('.brand-fallback').style.display='block';" />
+      <span class="brand-fallback">VEXL</span>
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#about">About</a>
+      <a href="#links">Links</a>
+      <a href="#specs">Specs</a>
+      <a href="#settings">Settings</a>
+      <a href="#projects">Projects</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero section">
+      <div class="hero-card reveal">
+        <div class="hero-left">
+          <div class="avatar-wrap">
+            <img id="profileAvatar" src="/icons/icon.png" alt="VEXL avatar" class="avatar" />
+            <div class="pulse-ring"></div>
+          </div>
+          <div class="status-pill"><span></span><b id="statusText">Building</b></div>
+        </div>
+
+        <div class="hero-content">
+          <p class="eyebrow">creator profile</p>
+          <h1 id="profileName" class="hero-title">VEXL</h1>
+          <p id="profileBio" class="hero-bio"></p>
+
+          <div id="stats" class="stats"></div>
+
+          <div class="hero-actions">
+            <a href="#links" class="btn primary">View links</a>
+            <a href="#projects" class="btn ghost">Projects</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section two-col reveal">
+      <div>
+        <p class="eyebrow">about</p>
+        <h2>About me</h2>
+      </div>
+      <div class="glass-panel">
+        <p>
+        Hey, I’m VEXL 20 Year old. I play Counter-Strike, make clips and work on different projects. This site is where I keep my links, setup, settings and other stuff in one place.
+        </p>
+      </div>
+    </section>
+
+    <section id="links" class="section reveal">
+      <div class="section-head">
+        <p class="eyebrow">links</p>
+        <h2>Find me here</h2>
+      </div>
+      <div id="socialGrid" class="card-grid"></div>
+    </section>
+
+    <section id="specs" class="section reveal">
+      <div class="section-head">
+        <p class="eyebrow">setup</p>
+        <h2>PC specs</h2>
+      </div>
+      <div id="specGrid" class="info-grid"></div>
+    </section>
+
+    <section id="settings" class="section reveal">
+      <div class="section-head">
+        <p class="eyebrow">settings</p>
+        <h2>CS2 settings</h2>
+      </div>
+      <div id="cs2Grid" class="info-grid"></div>
+    </section>
+
+    <section id="projects" class="section reveal">
+      <div class="section-head">
+        <p class="eyebrow">work</p>
+        <h2>Projects</h2>
+      </div>
+      <div id="projectGrid" class="project-grid"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>VEXL</span>
+    <span>Copyright © 2026. All rights reserved.</span>
+  </footer>
+
+  <script src="/script.js"></script>
+</body>
+</html>
