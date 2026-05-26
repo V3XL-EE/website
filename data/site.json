@@ -23,12 +23,13 @@
     { "value": "Estonia", "label": "location" }
   ],
   "specs": [
-    { "name": "CPU", "value": "I5-11600K" },
-    { "name": "GPU", "value": "RTX 3070" },
-    { "name": "RAM", "value": "32GB DDR4" },
-    { "name": "Mouse", "value": "Viper V3 Pro" },
+    { "name": "CPU", "value": "Intel Core i9-14900K" },
+    { "name": "GPU", "value": "NVIDIA GeForce RTX 5060 Ti" },
+    { "name": "RAM", "value": "64GB DDR5" },
+    { "name": "Storage", "value": "2TB NVMe SSD" },
+    { "name": "Mouse", "value": "Razer Viper V3 Pro" },
     { "name": "Keyboard", "value": "Razer Huntsman V3 Pro Mini" },
-    { "name": "Monitor", "value": "BENQ XL2411P 144hz" }
+    { "name": "Monitor", "value": "BenQ Zowie 240Hz" }
   ],
   "cs2": [
     { "name": "Resolution", "value": "1920x1080 / 1080x1080" },
