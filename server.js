@@ -79,30 +79,73 @@ function getVisitorKey(req) {
   return crypto.createHash("sha256").update(rawKey).digest("hex");
 }
 
-app.post("/api/view", (req, res) => {
-  const views = readViews();
-  const visitorKey = getVisitorKey(req);
+app.post("/api/view", async (req, res) => {
+  try {
+    const visitorKey = getVisitorKey(req);
 
-  const alreadyVisited = views.visitors.includes(visitorKey);
+    const { error: insertError } = await supabase
+      .from("site_visitors")
+      .insert({ visitor_hash: visitorKey });
 
-  if (!alreadyVisited) {
-    views.visitors.push(visitorKey);
-    views.total += 1;
-    saveViews(views);
+    const isNewVisitor = !insertError;
+
+    if (isNewVisitor) {
+      const { data: currentData, error: readError } = await supabase
+        .from("site_views")
+        .select("total")
+        .eq("id", 1)
+        .single();
+
+      if (readError) throw readError;
+
+      const newTotal = Number(currentData.total || 0) + 1;
+
+      const { error: updateError } = await supabase
+        .from("site_views")
+        .update({
+          total: newTotal,
+          updated_at: new Date().toISOString()
+        })
+        .eq("id", 1);
+
+      if (updateError) throw updateError;
+    }
+
+    const { data, error } = await supabase
+      .from("site_views")
+      .select("total")
+      .eq("id", 1)
+      .single();
+
+    if (error) throw error;
+
+    res.json({
+      total: data.total,
+      counted: isNewVisitor
+    });
+  } catch (error) {
+    console.error("View count error:", error);
+    res.status(500).json({ error: "View count failed" });
   }
-
-  res.json({
-    total: views.total,
-    counted: !alreadyVisited
-  });
 });
 
-app.get("/api/view", (req, res) => {
-  const views = readViews();
+app.get("/api/view", async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from("site_views")
+      .select("total")
+      .eq("id", 1)
+      .single();
 
-  res.json({
-    total: views.total
-  });
+    if (error) throw error;
+
+    res.json({
+      total: data.total
+    });
+  } catch (error) {
+    console.error("View count read error:", error);
+    res.status(500).json({ error: "View count failed" });
+  }
 });
 
 // Current active viewers
