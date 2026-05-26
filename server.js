@@ -155,7 +155,7 @@ function getActiveViewerKey(req) {
 
 function cleanActiveViewers() {
   const now = Date.now();
-  const timeout = 45 * 1000;
+  const timeout = 1 * 1000;
 
   for (const [key, lastSeen] of activeViewers.entries()) {
     if (now - lastSeen > timeout) {
